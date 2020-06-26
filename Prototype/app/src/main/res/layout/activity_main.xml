@@ -67,14 +67,25 @@
             app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_add_word"
+            android:id="@+id/fab_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_black_24dp"
+            android:src="@drawable/ic_expand_less_black_24dp"
             app:fab_colorNormal="#ffffff"
             app:fab_colorPressed="#99d4d4d4"
             app:fab_colorRipple="#66efecec"
-            app:fab_label="단어 추가"
+            app:fab_label="최신순"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_asc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+            app:fab_colorNormal="#ffffff"
+            app:fab_colorPressed="#99d4d4d4"
+            app:fab_colorRipple="#66efecec"
+            app:fab_label="추가순"
             app:fab_size="mini"/>
 
 

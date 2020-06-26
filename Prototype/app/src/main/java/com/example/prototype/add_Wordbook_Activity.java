@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -18,11 +19,15 @@ public class add_Wordbook_Activity extends AppCompatActivity {
     private EditText mTitleEditText;
     private EditText mSubtitleEditText;
     Button submitButton;
-    //wdawadwaddwa
+    //wdawadwaddwaadw
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__wordbook_);
+
+        //액션바 숨기기
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         mTitleEditText = findViewById(R.id.title_edit);
         mSubtitleEditText = findViewById(R.id.subtitle_edit);
@@ -44,29 +49,31 @@ public class add_Wordbook_Activity extends AppCompatActivity {
                 String title = mTitleEditText.getText().toString();
                 String subtitle = mSubtitleEditText.getText().toString();
                 //저장하는 부분
-                if(mWordbookId == -1){
-                    boolean insertData = addData(title, subtitle);
-                    if(insertData == true){
-                        Toast.makeText(add_Wordbook_Activity.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        startActivity(new Intent(add_Wordbook_Activity.this, MainActivity.class));
-                    }else{
-                        Toast.makeText(add_Wordbook_Activity.this, "저장에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                if(title.getBytes().length <=0){
+                    Toast.makeText(add_Wordbook_Activity.this, "타이틀을 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (mWordbookId == -1) {
+                        boolean insertData = addData(title, subtitle);
+                        if (insertData == true) {
+                            Toast.makeText(add_Wordbook_Activity.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            startActivity(new Intent(add_Wordbook_Activity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(add_Wordbook_Activity.this, "저장에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    //수정하는 부분
+                    else {
+                        boolean updateData = UpdateData(title, subtitle);
+                        if (updateData == true) {
+                            Toast.makeText(add_Wordbook_Activity.this, "수정 성공", Toast.LENGTH_SHORT).show();
+                            setResult(RESULT_OK);
+                            startActivity(new Intent(add_Wordbook_Activity.this, MainActivity.class));
+                        } else {
+                            Toast.makeText(add_Wordbook_Activity.this, "수정에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
-                //수정하는 부분
-                else{
-                    boolean updateData = UpdateData(title, subtitle);
-                    if(updateData == true)
-                    {
-                        Toast.makeText(add_Wordbook_Activity.this, "수정 성공", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        startActivity(new Intent(add_Wordbook_Activity.this, MainActivity.class));
-                    }else{
-                        Toast.makeText(add_Wordbook_Activity.this, "수정에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
             }
         });
     }

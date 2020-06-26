@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_INSERT = 1000;
 
-    FloatingActionButton fab_add_list, fab_add_word;
+    FloatingActionButton fab_add_list, fab_list_desc, fab_list_asc;
 
     private ListAdapter mAdapter;
 
@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         //플로팅 액션 버튼
         fab_add_list = findViewById(R.id.fab_add_list);
-        fab_add_word = findViewById(R.id.fab_add_word);
+        fab_list_desc = findViewById(R.id.fab_desc);
+        fab_list_asc = findViewById(R.id.fab_asc);
 
         fab_add_list.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,24 +51,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fab_add_word.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //단어 추가하는 페이지로 이동 액션
-                Toast.makeText(MainActivity.this, "단어 추가하기 버튼", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //리스트 뷰
-        ListView listView = findViewById(R.id.title_list);
+        final ListView listView = findViewById(R.id.title_list);
         //리스트 뷰 헤더
         final ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.listview_header, null, false);
+        //리스트 뷰 푸터
+        ViewGroup footer = (ViewGroup)getLayoutInflater().inflate(R.layout.wordbook_footer, null,false);
 
         listView.addHeaderView(header, null, false);
+        listView.addFooterView(footer, null,false);
 
         final Cursor cursor = getListCursor();
         mAdapter = new ListAdapter(this, cursor);
         listView.setAdapter(mAdapter);
+
+        fab_list_desc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Cursor cursor = getListCursor();
+                mAdapter = new ListAdapter(MainActivity.this, cursor);
+                listView.setAdapter(mAdapter);
+            }
+        });
+
+        fab_list_asc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Cursor cursor = getListCursor2();
+                mAdapter = new ListAdapter(MainActivity.this, cursor);
+                listView.setAdapter(mAdapter);
+            }
+        });
 
         //다음 액티비티를 띄우면서 내용을 보여준다.(새로운 테이블로 넘어가야 한다,)
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -161,6 +176,11 @@ public class MainActivity extends AppCompatActivity {
     private Cursor getListCursor(){
         DBHelper dbHelper = DBHelper.getInstance(this);
         return dbHelper.getReadableDatabase().query(DbContract.DbEntry.TABLE_NAME, null,null,null,null,null,DbContract.DbEntry._ID + " DESC");
+    }
+
+    private Cursor getListCursor2(){
+        DBHelper dbHelper = DBHelper.getInstance(this);
+        return dbHelper.getReadableDatabase().query(DbContract.DbEntry.TABLE_NAME, null,null,null,null,null,null);
     }
 
 
