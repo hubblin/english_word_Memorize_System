@@ -29,6 +29,7 @@ import java.util.Locale;
 public class wordMain extends AppCompatActivity {
 
     //==========================================//
+    //6464684684684684
     //TTS 부분//
     private TextToSpeech mTTS;
     private SeekBar mSeekBarSpeed;
