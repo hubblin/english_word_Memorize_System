@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF1F3"
+    tools:context=".wordMain">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:divider="#EFF1F3"
+        android:dividerHeight="12dp"
+        android:id="@+id/word_list"
+        android:scrollbars="none"
+        />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        app:menu_animationDelayPerItem="55"
+        app:menu_backgroundColor="@android:color/transparent"
+        app:menu_buttonSpacing="0dp"
+        app:menu_colorNormal="#da3c21"
+        app:menu_colorRipple="#99d4d4d4"
+        app:menu_colorPressed="#dc4b3f"
+        app:menu_fab_size="normal"
+        app:menu_icon="@drawable/fab_add"
+        app:menu_labels_colorNormal="#ffffff"
+        app:menu_labels_colorPressed="#99d4d4d4"
+        app:menu_labels_colorRipple="#66efecec"
+        app:menu_labels_cornerRadius="15dp"
+        app:menu_labels_ellipsize="none"
+        app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        app:menu_labels_maxLines="-1"
+        android:padding="6dp"
+        app:menu_labels_position="left"
+        app:menu_labels_showShadow="true"
+        app:menu_labels_singleLine="false"
+        app:menu_labels_textColor="#000000"
+        app:menu_labels_textSize="15sp"
+        app:menu_openDirection="up"
+        app:menu_shadowColor="#66aff198"
+        app:menu_shadowRadius="4dp"
+        app:menu_shadowXOffset="1dp"
+        app:menu_shadowYOffset="4dp"
+        app:menu_showShadow="true"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_add_word_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_playlist_add_black_24dp"
+            app:fab_colorNormal="#ffffff"
+            app:fab_colorPressed="#99d4d4d4"
+            app:fab_colorRipple="#66efecec"
+            app:fab_label="단어 추가"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_serch_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_black_24dp"
+            app:fab_colorNormal="#ffffff"
+            app:fab_colorPressed="#99d4d4d4"
+            app:fab_colorRipple="#66efecec"
+            app:fab_label="단어 찾기"
+            app:fab_size="mini"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_solve_problems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_create_black_24dp"
+            app:fab_colorNormal="#ffffff"
+            app:fab_colorPressed="#99d4d4d4"
+            app:fab_colorRipple="#66efecec"
+            app:fab_label="문제풀기"
+            app:fab_size="mini"
+            />
+
+
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed"
+            android:textSize="16sp"
+            />
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="50"
+            android:id="@+id/seek_bar_speed"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
