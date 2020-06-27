@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -38,6 +39,10 @@ public class add_word extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_word);
+
+        //액션바 숨기기
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         spell = findViewById(R.id.spell_edit);
         text1 = findViewById(R.id.mean1_edit);
@@ -88,42 +93,47 @@ public class add_word extends AppCompatActivity {
                 String wordmean4 = text4.getText().toString();
                 String wordmean5 = text5.getText().toString();
                 String wbId = wordbookId.getText().toString();
-                count=0;
-                date = LocalDate.now();
-                String now_date = date_return();
 
+                if(spell1.getBytes().length <= 0 || wordmean1.getBytes().length <= 0){
+                    Toast.makeText(add_word.this, "단어와 최소 하나의 뜻을 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean checkData = CheckData(spell1, wbId);
+                    if(checkData == true){
+                        Toast.makeText(add_word.this, "이 단어장에는 이미 같은 단어가 있습니다.", Toast.LENGTH_SHORT).show();
+                    }else {
 
+                        if (WordId == -2) {
 
-                if(WordId == -2) {
-                    boolean insertData = addData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId, count);
-                    if (insertData == true) {
+                            boolean insertData = addData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId);
 
+                            if (insertData == true) {
+                                Toast.makeText(add_word.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
+                                setResult(RESULT_OK);
+                                Intent intent1 = new Intent(add_word.this, wordMain.class);
+                                intent1.putExtra("id", wWordbookId);
+                                intent1.putExtra("title", sTitle);
+                                intent1.putExtra("subtitle", sSubtitle);
+                                startActivity(intent1);
+                            } else {
+                                Toast.makeText(add_word.this, "저장에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        //수정부분
+                        else {
+                            boolean updateData = UpdateData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId);
+                            if (updateData == true) {
+                                Toast.makeText(add_word.this, "수정 성공", Toast.LENGTH_SHORT).show();
+                                setResult(RESULT_OK);
+                                Intent intent1 = new Intent(add_word.this, wordMain.class);
+                                intent1.putExtra("id", wWordbookId);
+                                intent1.putExtra("title", sTitle);
+                                intent1.putExtra("subtitle", sSubtitle);
+                                startActivity(intent1);
+                            } else {
+                                Toast.makeText(add_word.this, "수정에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                        Toast.makeText(add_word.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        Intent intent1 = new Intent(add_word.this, wordMain.class);
-                        intent1.putExtra("id", wWordbookId);
-                        intent1.putExtra("title", sTitle);
-                        intent1.putExtra("subtitle", sSubtitle);
-                        //Cursor cu = db.rawQuery("select "+ DbContract.DbEntry2._ID +" from "+ DbContract.DbEntry2.TABLE_NAME +" where "+ ,null);
-                        startActivity(intent1);
-                    } else {
-                        Toast.makeText(add_word.this, "저장에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                //수정부분
-                else{
-                    boolean updateData = UpdateData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId);
-                    if(updateData == true){
-                        Toast.makeText(add_word.this, "수정 성공", Toast.LENGTH_SHORT).show();
-                        setResult(RESULT_OK);
-                        Intent intent1 = new Intent(add_word.this, wordMain.class);
-                        intent1.putExtra("id", wWordbookId);
-                        intent1.putExtra("title", sTitle);
-                        intent1.putExtra("subtitle", sSubtitle);
-                        startActivity(intent1);
-                    }else{
-                        Toast.makeText(add_word.this, "수정에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -181,4 +191,20 @@ public class add_word extends AppCompatActivity {
         return date_format.format(date2);
     }
 
+    public boolean CheckData(String spell, String wbId){
+
+        //저장 직전에 단어장에 같은 단어가 존재 하는지 검색
+        SQLiteDatabase sqLiteDatabase = DBHelper.getInstance(this).getReadableDatabase();
+
+        Cursor sqlTemp = sqLiteDatabase.rawQuery("SELECT * FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORD_SPELL + "='" + spell +"'"+ " AND " + DbContract.DbEntry2.WORDBOOK_ID + "='" + wbId +"'", null);
+
+        if(sqlTemp.getCount() <=0){
+            sqlTemp.close();
+            return false;
+        }
+        sqlTemp.close();
+        return true;
+    }
+
 }
+

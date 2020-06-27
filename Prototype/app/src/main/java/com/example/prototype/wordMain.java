@@ -92,6 +92,8 @@ public class wordMain extends AppCompatActivity {
 
         //헤더 부분
         final ViewGroup header = (ViewGroup) getLayoutInflater().inflate(R.layout.listview_header, null, false);
+        //푸터 부분
+        View footer1 = getLayoutInflater().inflate(R.layout.word_footer, null,false);
         TextView mTitle = header.findViewById(R.id.wordbook_title);
         TextView mSubtitle = header.findViewById(R.id.wordbook_subtitle);
 
@@ -103,6 +105,7 @@ public class wordMain extends AppCompatActivity {
         mSubtitle.setText(sSubtitle);
 
         word_list.addHeaderView(header, null, false);
+        word_list.addFooterView(footer1);
 
         //플로팅 액션 버튼
         fab_add_word_list = findViewById(R.id.fab_add_word_list);
@@ -123,7 +126,11 @@ public class wordMain extends AppCompatActivity {
         fab_serch_word.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(wordMain.this, "단어 추가하기 버튼", Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(wordMain.this, WebMain.class);
+                intent1.putExtra("wordbookId", mWordbookId);
+                intent1.putExtra("title", sTitle);
+                intent1.putExtra("subtitle", sSubtitle);
+                startActivityForResult(intent1,REQUEST_CODE_INSERT);
             }
         });
 
