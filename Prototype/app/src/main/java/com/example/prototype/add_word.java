@@ -4,12 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.Locale;
 
 public class add_word extends AppCompatActivity {
 
@@ -17,6 +26,12 @@ public class add_word extends AppCompatActivity {
     private long WordId = -2;
     private EditText spell, text1, text2, text3, text4, text5, wordbookId;
     Button submitButton;
+
+    int count;
+
+    LocalDate date;
+    private DBHelper databaseHelper;
+    private SQLiteDatabase db;
 
 
     @Override
@@ -35,6 +50,9 @@ public class add_word extends AppCompatActivity {
         submitButton = findViewById(R.id.submitButton1);
 
         Intent intent = getIntent();
+
+        databaseHelper = new DBHelper(this);
+        db = databaseHelper.getWritableDatabase();   // 쓰기 모드
 
         final String WordbookId = Long.toString(intent.getLongExtra("wordbookId", -1));
         wWordbookId = intent.getLongExtra("wordbookId", -1);
@@ -70,16 +88,24 @@ public class add_word extends AppCompatActivity {
                 String wordmean4 = text4.getText().toString();
                 String wordmean5 = text5.getText().toString();
                 String wbId = wordbookId.getText().toString();
+                count=0;
+                date = LocalDate.now();
+                String now_date = date_return();
+
+
 
                 if(WordId == -2) {
-                    boolean insertData = addData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId);
+                    boolean insertData = addData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId, count);
                     if (insertData == true) {
+
+
                         Toast.makeText(add_word.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
                         setResult(RESULT_OK);
                         Intent intent1 = new Intent(add_word.this, wordMain.class);
                         intent1.putExtra("id", wWordbookId);
                         intent1.putExtra("title", sTitle);
                         intent1.putExtra("subtitle", sSubtitle);
+                        //Cursor cu = db.rawQuery("select "+ DbContract.DbEntry2._ID +" from "+ DbContract.DbEntry2.TABLE_NAME +" where "+ ,null);
                         startActivity(intent1);
                     } else {
                         Toast.makeText(add_word.this, "저장에 문제가 발생했습니다.", Toast.LENGTH_SHORT).show();
@@ -106,7 +132,9 @@ public class add_word extends AppCompatActivity {
     }
 
 
-    public boolean addData(String spell, String text1, String text2, String text3, String text4, String text5, String wbId){
+    public boolean addData(String spell, String text1, String text2, String text3, String text4, String text5, String wbId,int count ){
+
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(DbContract.DbEntry2.WORD_SPELL, spell);
         contentValues.put(DbContract.DbEntry2.WORD_MEAN1, text1);
@@ -115,6 +143,8 @@ public class add_word extends AppCompatActivity {
         contentValues.put(DbContract.DbEntry2.WORD_MEAN4, text4);
         contentValues.put(DbContract.DbEntry2.WORD_MEAN5, text5);
         contentValues.put(DbContract.DbEntry2.WORDBOOK_ID, wbId);
+        contentValues.put(DbContract.DbEntry2.DATE,date_return());
+        contentValues.put(DbContract.DbEntry2.CORRECT_ANSWER,count);
 
         SQLiteDatabase db = DBHelper.getInstance(this).getWritableDatabase();
         long newRowId = db.insert(DbContract.DbEntry2.TABLE_NAME, null, contentValues);
@@ -136,7 +166,7 @@ public class add_word extends AppCompatActivity {
         contentValues.put(DbContract.DbEntry2.WORD_MEAN4, text4);
         contentValues.put(DbContract.DbEntry2.WORD_MEAN5, text5);
         contentValues.put(DbContract.DbEntry2.WORDBOOK_ID, wbId);
-
+        Log.d("오류",""+date_return());
         SQLiteDatabase db = DBHelper.getInstance(this).getWritableDatabase();
         int count = db.update(DbContract.DbEntry2.TABLE_NAME, contentValues, DbContract.DbEntry2._ID + " = " + WordId, null);
         if(count == 0){
@@ -144,6 +174,11 @@ public class add_word extends AppCompatActivity {
         }else{
             return true;
         }
+    }
+    private String date_return(){
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date date2 = new Date();
+        return date_format.format(date2);
     }
 
 }
