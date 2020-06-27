@@ -26,5 +26,6 @@
         app:fabSize="normal"
         app:backgroundTint="#da3c21"
         android:layout_margin="20dp"
+        android:visibility="invisible"
         />
 </RelativeLayout>
