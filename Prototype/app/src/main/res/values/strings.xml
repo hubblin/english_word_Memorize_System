@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Prototype</string>
+    <string name="multi_problem">다음 영단어의 올바른 \n뜻을 구하세요.</string>
+    <string name="problem">영어단어 받아오기</string>
+    <string name="option">영어단어 가져오기 </string>
+</resources>
