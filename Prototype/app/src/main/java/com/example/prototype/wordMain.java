@@ -24,11 +24,14 @@ import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class wordMain extends AppCompatActivity {
 
     //==========================================//
+    //6464684684684684
     //TTS 부분//
     private TextToSpeech mTTS;
     private SeekBar mSeekBarSpeed;
@@ -47,6 +50,9 @@ public class wordMain extends AppCompatActivity {
     private SQLiteDatabase db;
 
     Cursor check_cur1,check_cur2;
+
+    ArrayList<String> delay_date = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +149,18 @@ public class wordMain extends AppCompatActivity {
                     else { //(비정상)문제 풀 시간이 지나 문제가 밀린 경우
                         Toast.makeText(getApplicationContext(),
                                 "문제가 밀림",Toast.LENGTH_SHORT).show();
+
+                        check_cur2.moveToFirst();
+                        Log.e("awdokpodwak", ""+check_cur2.getCount());
+                        for (int i = 0; i<check_cur2.getCount();i++){
+                            delay_date.add(check_cur2.getString(0));
+                            check_cur2.moveToNext();
+                            Log.i("dk",""+ delay_date.get(i));
+
+                        }
+
+
+
 
                     }
                 }
