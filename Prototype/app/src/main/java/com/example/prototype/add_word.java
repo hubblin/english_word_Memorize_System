@@ -93,7 +93,8 @@ public class add_word extends AppCompatActivity {
                 String wordmean4 = text4.getText().toString();
                 String wordmean5 = text5.getText().toString();
                 String wbId = wordbookId.getText().toString();
-                count =0;
+                count = 0;
+
 
                 if(spell1.getBytes().length <= 0 || wordmean1.getBytes().length <= 0){
                     Toast.makeText(add_word.this, "단어와 최소 하나의 뜻을 입력해 주세요", Toast.LENGTH_SHORT).show();
@@ -105,7 +106,9 @@ public class add_word extends AppCompatActivity {
 
                         if (WordId == -2) {
 
+
                             boolean insertData = addData(spell1, wordmean1, wordmean2, wordmean3, wordmean4, wordmean5, wbId, count);
+
 
                             if (insertData == true) {
                                 Toast.makeText(add_word.this, "저장되었습니다.", Toast.LENGTH_SHORT).show();
