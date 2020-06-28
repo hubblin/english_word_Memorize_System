@@ -3,6 +3,7 @@ package com.example.prototype;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,8 +31,8 @@ public class WebMain extends AppCompatActivity {
 
     FloatingActionButton button;
 
-    String spell;
-    String mean1, mean2, mean3,mean4, mean5;
+    String spell ="";
+    String mean1="", mean2="", mean3="",mean4="", mean5="";
 
     public static final int REQUEST_CODE_INSERT = 1001;
 
@@ -58,6 +59,13 @@ public class WebMain extends AppCompatActivity {
                 // 자바스크립트 인터페이스로 연결되어 있는 getHTML를 실행
                 // 자바스크립트 기본 메소드로 html 소스를 통째로 지정해서 인자로 넘김
                 view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");
+                button.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                button.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -88,6 +96,9 @@ public class WebMain extends AppCompatActivity {
 
                     try {
                         contents1 = doc.select("a.txt_cleansch span");
+                        if(contents1.text() == ""){
+                            contents1 = doc.select("div.clean_word h3.tit_cleanword span.txt_cleanword");
+                        }
                         spell = contents1.text();
                     } catch (Exception e) {
                         spell = "";
@@ -96,31 +107,56 @@ public class WebMain extends AppCompatActivity {
                         contents2 = doc.select("div.cleanword_type ul.list_search li span.txt_search").first();
                         mean1 = contents2.text();
                     } catch (Exception e) {
-                        mean1 = "";
+                        try{
+                            contents2 = doc.select("ul.list_mean li span.txt_mean").first();
+                            mean1 = contents2.text();
+                        }catch(Exception e1){
+                            mean1 = "";
+                        }
                     }
                     try {
                         contents3 = doc.select("div.cleanword_type ul.list_search li").next().first();
                         mean2 = contents3.select("span.txt_search").text();
                     } catch (Exception e) {
-                        mean2 = "";
+                        try{
+                            contents3 = doc.select("ul.list_mean li").next().first();
+                            mean2 = contents3.select("span.txt_mean").text();
+                        }catch(Exception e1){
+                            mean2 = "";
+                        }
                     }
                     try {
                         contents4 = doc.select("div.cleanword_type ul.list_search li").next().next().first();
                         mean3 = contents4.select("span.txt_search").text();
                     } catch (Exception e) {
-                        mean3 = "";
+                        try{
+                            contents4 = doc.select("ul.list_mean li").next().next().first();
+                            mean3 = contents4.select(" span.txt_mean").text();
+                        }catch(Exception e1){
+                            mean3 = "";
+                        }
                     }
                     try {
                         contents5 = doc.select("div.cleanword_type ul.list_search li").next().next().next().first();
                         mean4 = contents5.select("span.txt_search").text();
                     } catch (Exception e) {
-                        mean4 = "";
+                        try{
+                            contents5 = doc.select("ul.list_mean li").next().next().next().first();
+                            mean4 = contents5.select("span.txt_mean").text();
+                        }catch(Exception e1){
+                            mean4 ="";
+                        }
                     }
                     try {
                         contents6 = doc.select("div.cleanword_type ul.list_search li").next().next().next().next().first();
                         mean5 = contents6.select("span.txt_search").text();
                     } catch (Exception e) {
-                        mean5 = "";
+                        try{
+                            contents6 = doc.select("ul.list_mean li").next().next().next().next().first();
+                            mean5 = contents6.select("span.txt_mean").text();
+                        }catch(Exception e1){
+                            mean5 = "";
+                        }
                     }
                     if (spell == "" && mean1 == "" && mean2 == "" && mean3 == "" && mean4 == "" && mean5 == "") {
                         Toast.makeText(WebMain.this, "페이지에 단어가 없거나 로딩이 끝나지 않았습니다.", Toast.LENGTH_SHORT).show();
@@ -180,4 +216,8 @@ public class WebMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

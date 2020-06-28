@@ -24,6 +24,8 @@ import com.github.clans.fab.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
+    private  long backBtnTime =0;
+
     public static final int REQUEST_CODE_INSERT = 1000;
 
     FloatingActionButton fab_add_list, fab_list_desc, fab_list_asc;
@@ -215,5 +217,22 @@ public class MainActivity extends AppCompatActivity {
             titleView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry.WORDBOOK_NAME_TITLE)));
             subtitleView.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry.WORDBOOK_NAME_SUBTITLE)));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        long curTime = System.currentTimeMillis();
+        long gapTime = curTime - backBtnTime;
+
+        if(0 <= gapTime && 2000 >= gapTime) {
+            finishAffinity();
+            System.runFinalization();
+            System.exit(0);
+        }
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
