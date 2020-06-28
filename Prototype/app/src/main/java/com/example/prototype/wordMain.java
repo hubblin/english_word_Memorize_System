@@ -399,8 +399,14 @@ public class wordMain extends AppCompatActivity {
             Log.d("태그", ""+countInt);
             switch (countInt){
                 case 0:
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 1:
+                    Log.d("태그1", ""+countInt);
                     gauge1.setVisibility(View.INVISIBLE);
                     gauge2.setVisibility(View.INVISIBLE);
                     gauge3.setVisibility(View.INVISIBLE);
@@ -408,6 +414,7 @@ public class wordMain extends AppCompatActivity {
                     battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 2:
+                    Log.d("태그2", ""+countInt);
                     gauge1.setVisibility(View.INVISIBLE);
                     gauge2.setVisibility(View.INVISIBLE);
                     gauge4.setVisibility(View.VISIBLE);
@@ -415,6 +422,7 @@ public class wordMain extends AppCompatActivity {
                     battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 3:
+                    Log.d("태그3", ""+countInt);
                     gauge4.setVisibility(View.VISIBLE);
                     gauge3.setVisibility(View.VISIBLE);
                     gauge2.setVisibility(View.VISIBLE);
@@ -422,6 +430,7 @@ public class wordMain extends AppCompatActivity {
                     battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 4:
+                    Log.d("태그4", ""+countInt);
                     gauge4.setVisibility(View.VISIBLE);
                     gauge3.setVisibility(View.VISIBLE);
                     gauge2.setVisibility(View.VISIBLE);
@@ -429,6 +438,7 @@ public class wordMain extends AppCompatActivity {
                     battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 5:
+                    Log.d("태그5", ""+countInt);
                     gauge1.setVisibility(View.INVISIBLE);
                     gauge2.setVisibility(View.INVISIBLE);
                     gauge3.setVisibility(View.INVISIBLE);
