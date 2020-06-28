@@ -35,14 +35,10 @@ public class Multiple_choice extends AppCompatActivity {
     TextView problem;
 
     int answer_id; // 정답 저장되는 변수
-    int result[] = new int[4]; // 보기 커서 위치 용
-
 
     ArrayList<Integer> problem_view_arr;
 
     int random; // 정답 랜덤으로 하기 위한 변수
-
-    int count2;
 
     int number_of_correct_answers = 0;  // 정답 횟수
     int wrong_count = 0; // 틀린횟수
@@ -53,8 +49,6 @@ public class Multiple_choice extends AppCompatActivity {
     Cursor cursor, cu1;
 
     int temp1, temp2, temp3, temp4;
-
-    int local_random;
 
 
     @Override
@@ -83,21 +77,21 @@ public class Multiple_choice extends AppCompatActivity {
         problem = (TextView) findViewById(R.id.problem);
 
         //문제 커서
-        cursor = db.rawQuery("SELECT "+ DbContract.DbEntry2.WORD_SPELL +","+ DbContract.DbEntry2._ID +" FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORDBOOK_ID + "=" + WordbookId + " AND " + DbContract.DbEntry2.DATE + " = date('now') order by random()", null);
+        cursor = db.rawQuery("SELECT " + DbContract.DbEntry2.WORD_SPELL + "," + DbContract.DbEntry2._ID + " FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORDBOOK_ID + "=" + WordbookId + " AND " + DbContract.DbEntry2.DATE + " = date('now') order by random()", null);
         cursor.moveToFirst();
 
         problem.setText(cursor.getString(0));
         answer_id = cursor.getInt(1);
 
         //보기 커서
-        cu1 = db.rawQuery("select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from(" +
-                "select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from (" +
-                " select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from "
-                + DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id+")" +
+        cu1 = db.rawQuery("select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from(" +
+                "select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from (" +
+                " select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from "
+                + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2._ID + "=" + answer_id + ")" +
                 " union " +
-                "select "+ DbContract.DbEntry2._ID+", "+DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from(" +
-                " select "+ DbContract.DbEntry2._ID+", "+DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from "
-                + DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"!="+answer_id+" order by random() limit 3)) as a order by random()", null);
+                "select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from(" +
+                " select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from "
+                + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2._ID + "!=" + answer_id + " order by random() limit 3)) as a order by random()", null);
 
         parent_option = (LinearLayout) findViewById(R.id.parent_option);
         LinearLayout.LayoutParams parent_layout = new LinearLayout.LayoutParams(
@@ -114,12 +108,15 @@ public class Multiple_choice extends AppCompatActivity {
      * 영어단어 작을 때도 유동적으로 하기 위해 그때 그때 TextView 생성
      **/
     public void create_text_view(int a) {
-
+        int random = (int) (Math.random() * 5 + 2);
+        while (cu1.getString(random).equals("")) {
+            random = (int) (Math.random() * 5 + 2);
+        }
         TextView view = new TextView(this);
-        view.setText(cu1.getString(2));
+        view.setText(cu1.getString(random));
         view.setTextSize(FONT_SIZE);
         view.setTextColor(Color.BLACK);
-        view.setBackgroundResource(R.drawable.border_radius);
+        view.setBackgroundResource(R.drawable.border_radius2);
         view.setGravity(Gravity.CENTER);
         view.setTag(a);                    // 여기까지 TextView 설정(글자색, 폰트크기 등등)
 
@@ -128,7 +125,9 @@ public class Multiple_choice extends AppCompatActivity {
 
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                3
+        );
 
         p.setMargins(50, 0, 50, 20);
         view.setLayoutParams(p);
@@ -146,30 +145,29 @@ public class Multiple_choice extends AppCompatActivity {
         final String WordbookId = Long.toString(intent.getLongExtra("wordbookId", -1));
         String new_id = WordbookId;
 
-        cursor = db.rawQuery("SELECT "+ DbContract.DbEntry2.WORD_SPELL +","+ DbContract.DbEntry2._ID +" FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORDBOOK_ID + "=" + WordbookId + " AND " + DbContract.DbEntry2.DATE + " = date('now') order by random()", null);
-        if (cursor.getCount()==0){
+        cursor = db.rawQuery("SELECT " + DbContract.DbEntry2.WORD_SPELL + "," + DbContract.DbEntry2._ID + " FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORDBOOK_ID + "=" + WordbookId + " AND " + DbContract.DbEntry2.DATE + " = date('now') order by random()", null);
+        if (cursor.getCount() == 0) {
             Intent go_to_result = new Intent(getApplicationContext(), Problem_result_activity.class);
             go_to_result.putExtra("wordbookId", new_id);
             go_to_result.putExtra("answer_count", number_of_correct_answers);
             go_to_result.putExtra("wrong_count", wrong_count);
             finish();
             startActivityForResult(go_to_result, REQUEST_CODE_INSERT);
-        }
-        else {
+        } else {
             cursor.moveToFirst();
             problem.setText(cursor.getString(0));
             answer_id = cursor.getInt(1);
-            Log.d("err","ttttt");
+            Log.d("err", "ttttt");
 
 
-            cu1 = db.rawQuery("select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from(" +
-                    "select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from (" +
-                    " select "+ DbContract.DbEntry2._ID+", "+ DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from "
-                    + DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id+")" +
+            cu1 = db.rawQuery("select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from(" +
+                    "select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from (" +
+                    " select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from "
+                    + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2._ID + "=" + answer_id + ")" +
                     " union " +
-                    "select "+ DbContract.DbEntry2._ID+", "+DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from(" +
-                    " select "+ DbContract.DbEntry2._ID+", "+DbContract.DbEntry2.WORD_SPELL+", "+ DbContract.DbEntry2.WORD_MEAN1+", "+ DbContract.DbEntry2.WORD_MEAN2+", "+ DbContract.DbEntry2.WORD_MEAN3+", "+ DbContract.DbEntry2.WORD_MEAN4+", "+ DbContract.DbEntry2.WORD_MEAN5+" from "
-                    + DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"!="+answer_id+" order by random() limit 3)) as a order by random()", null);
+                    "select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from(" +
+                    " select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from "
+                    + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2.WORDBOOK_ID + " = " + WordbookId + " and " + DbContract.DbEntry2._ID + "!=" + answer_id + " order by random() limit 3)) as a order by random()", null);
 
 
             Toast.makeText(getApplicationContext(), "정답횟수:" + number_of_correct_answers + "\n틀린횟수:" + wrong_count, Toast.LENGTH_SHORT).show();
@@ -179,7 +177,6 @@ public class Multiple_choice extends AppCompatActivity {
 
             problem_view();
         }
-
 
 
     }
@@ -219,7 +216,7 @@ public class Multiple_choice extends AppCompatActivity {
                     break;
 
                 case 3:
-                    if (temp3== answer_id) {
+                    if (temp3 == answer_id) {
                         Toast.makeText(getApplicationContext(), "정답", Toast.LENGTH_SHORT).show();
                         number_of_correct_answers += 1;
                         save_problem_count(random, true);
@@ -386,46 +383,43 @@ public class Multiple_choice extends AppCompatActivity {
         problem_view_arr = new ArrayList<Integer>();
 
         cu1.moveToFirst();
-        Log.d("answer_id",""+answer_id);
+        Log.d("answer_id", "" + answer_id);
 
         temp1 = cu1.getInt(0);
-        Log.d("test_number", ""+temp1);
-        Log.d("arr_1",""+temp1);
+        Log.d("test_number", "" + temp1);
+        Log.d("arr_1", "" + temp1);
 
         cu1.moveToNext();
         temp2 = cu1.getInt(0);
-        Log.d("arr_2",""+temp2);
+        Log.d("arr_2", "" + temp2);
 
         cu1.moveToNext();
         temp3 = cu1.getInt(0);
-        Log.d("arr_3",""+temp3);
+        Log.d("arr_3", "" + temp3);
 
         cu1.moveToNext();
         temp4 = cu1.getInt(0);
-        Log.d("arr_4",""+temp4);
+        Log.d("arr_4", "" + temp4);
 
 
         cu1.moveToFirst();
-        Log.d("id_1",""+cu1.getInt(0));
+        Log.d("id_1", "" + cu1.getInt(0));
         create_text_view(1);
 
         cu1.moveToNext();
-        Log.d("id_2",""+cu1.getInt(0));
+        Log.d("id_2", "" + cu1.getInt(0));
         create_text_view(2);
 
         cu1.moveToNext();
-        Log.d("id_3",""+cu1.getInt(0));
+        Log.d("id_3", "" + cu1.getInt(0));
         create_text_view(3);
 
         cu1.moveToNext();
-        Log.d("id_4",""+cu1.getInt(0));
+        Log.d("id_4", "" + cu1.getInt(0));
         create_text_view(4);
 
 
-
     }
-
-
 
 
 }
