@@ -281,7 +281,7 @@ public class wordMain extends AppCompatActivity {
                 //
                 speak(Spell);
                 //
-                Toast.makeText(wordMain.this, Spell + "선택", Toast.LENGTH_SHORT).show();
+
             }
         });
 
