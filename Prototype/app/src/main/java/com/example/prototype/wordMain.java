@@ -392,41 +392,59 @@ public class wordMain extends AppCompatActivity {
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
 
-            String countInt = cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
-            Log.d("태그", "" + countInt);
 
-            if (countInt.e'0') {
+            int countInt = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
+            Log.d("태그", ""+countInt);
+            switch (countInt){
+                case 0:
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
+                    break;
+                case 1:
+                    Log.d("태그1", ""+countInt);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
+                    break;
+                case 2:
+                    Log.d("태그2", ""+countInt);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
+                    break;
+                case 3:
+                    Log.d("태그3", ""+countInt);
+                    gauge4.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
+                    break;
+                case 4:
+                    Log.d("태그4", ""+countInt);
+                    gauge4.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
+                    break;
+                case 5:
+                    Log.d("태그5", ""+countInt);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape2);
 
-            } else if (countInt == 1) {
-                gauge1.setVisibility(View.INVISIBLE);
-                gauge2.setVisibility(View.INVISIBLE);
-                gauge3.setVisibility(View.INVISIBLE);
-                gauge4.setVisibility(View.VISIBLE);
-                battery_back.setBackgroundResource(R.drawable.gauge_shape);
-            } else if (countInt == 2) {
-                gauge1.setVisibility(View.INVISIBLE);
-                gauge2.setVisibility(View.INVISIBLE);
-                gauge4.setVisibility(View.VISIBLE);
-                gauge3.setVisibility(View.VISIBLE);
-                battery_back.setBackgroundResource(R.drawable.gauge_shape);
-            } else if (countInt == 3) {
-                gauge4.setVisibility(View.VISIBLE);
-                gauge3.setVisibility(View.VISIBLE);
-                gauge2.setVisibility(View.VISIBLE);
-                gauge1.setVisibility(View.INVISIBLE);
-                battery_back.setBackgroundResource(R.drawable.gauge_shape);
-            } else if (countInt == 4) {
-                gauge4.setVisibility(View.VISIBLE);
-                gauge3.setVisibility(View.VISIBLE);
-                gauge2.setVisibility(View.VISIBLE);
-                gauge1.setVisibility(View.VISIBLE);
-                battery_back.setBackgroundResource(R.drawable.gauge_shape);
-            } else if (countInt == 5) {
-                gauge1.setVisibility(View.INVISIBLE);
-                gauge2.setVisibility(View.INVISIBLE);
-                gauge3.setVisibility(View.INVISIBLE);
-                gauge4.setVisibility(View.INVISIBLE);
-                battery_back.setBackgroundResource(R.drawable.gauge_shape2);
+                    break;
+
             }
 
         }
