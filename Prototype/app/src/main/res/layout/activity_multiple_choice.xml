@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="#EFF1F3"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:id="@+id/background">
 
     <!--  제목 레이아웃   -->
     <LinearLayout

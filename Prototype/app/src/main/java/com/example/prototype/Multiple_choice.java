@@ -141,12 +141,14 @@ public class Multiple_choice extends AppCompatActivity {
      **/
     public void reset_activity() {
 
+        LinearLayout background = (LinearLayout)findViewById(R.id.background);
         Intent intent = getIntent();
         final String WordbookId = Long.toString(intent.getLongExtra("wordbookId", -1));
         String new_id = WordbookId;
-
         cursor = db.rawQuery("SELECT " + DbContract.DbEntry2.WORD_SPELL + "," + DbContract.DbEntry2._ID + " FROM " + DbContract.DbEntry2.TABLE_NAME + " WHERE " + DbContract.DbEntry2.WORDBOOK_ID + "=" + WordbookId + " AND " + DbContract.DbEntry2.DATE + " = date('now') order by random()", null);
+
         if (cursor.getCount() == 0) {
+            background.setVisibility(View.GONE);
             Intent go_to_result = new Intent(getApplicationContext(), Problem_result_activity.class);
             go_to_result.putExtra("wordbookId", new_id);
             go_to_result.putExtra("answer_count", number_of_correct_answers);
@@ -170,7 +172,6 @@ public class Multiple_choice extends AppCompatActivity {
                     + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2.WORDBOOK_ID + " = " + WordbookId + " and " + DbContract.DbEntry2._ID + "!=" + answer_id + " order by random() limit 3)) as a order by random()", null);
 
 
-            Toast.makeText(getApplicationContext(), "정답횟수:" + number_of_correct_answers + "\n틀린횟수:" + wrong_count, Toast.LENGTH_SHORT).show();
 
             parent_option.removeAllViews(); // 기존 보기 삭제
 
