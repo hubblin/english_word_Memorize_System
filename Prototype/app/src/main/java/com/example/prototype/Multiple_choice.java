@@ -91,7 +91,7 @@ public class Multiple_choice extends AppCompatActivity {
                 " union " +
                 "select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from(" +
                 " select " + DbContract.DbEntry2._ID + ", " + DbContract.DbEntry2.WORD_SPELL + ", " + DbContract.DbEntry2.WORD_MEAN1 + ", " + DbContract.DbEntry2.WORD_MEAN2 + ", " + DbContract.DbEntry2.WORD_MEAN3 + ", " + DbContract.DbEntry2.WORD_MEAN4 + ", " + DbContract.DbEntry2.WORD_MEAN5 + " from "
-                + DbContract.DbEntry2.TABLE_NAME + " where " + DbContract.DbEntry2._ID + "!=" + answer_id + " order by random() limit 3)) as a order by random()", null);
+                + DbContract.DbEntry2.TABLE_NAME + " where "+ DbContract.DbEntry2.WORDBOOK_ID+"="+WordbookId+" and " + DbContract.DbEntry2._ID + "!=" + answer_id + " order by random() limit 3)) as a order by random()", null);
 
         parent_option = (LinearLayout) findViewById(R.id.parent_option);
         LinearLayout.LayoutParams parent_layout = new LinearLayout.LayoutParams(

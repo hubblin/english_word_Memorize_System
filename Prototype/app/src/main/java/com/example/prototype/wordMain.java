@@ -186,41 +186,50 @@ public class wordMain extends AppCompatActivity {
                                 Log.d("before_date", "" + calculate_date.getString(0) + ", id=" + delay_problem_id);
                                 int delay_date = Integer.parseInt(calculate_date.getString(0)); //지난 날짜
 
-                                if (delay_date > delay_correct_count) {
 
-                                    while (delay_date > delay_correct_count) {
-                                        delay_date -= delay_correct_count;
-                                        delay_correct_count -= 1;
+                                if(delay_correct_count == 0){
+                                    db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "=date('now','+1 days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=0 " +
+                                            "where " + DbContract.DbEntry2._ID + "=" + delay_problem_id);
+                                }
+
+                                else{
+                                    if (delay_date > delay_correct_count) {
+
+                                        while (delay_date > delay_correct_count) {
+                                            delay_date -= delay_correct_count;
+                                            delay_correct_count -= 1;
+                                            if (delay_correct_count == 0) {
+                                                // count 0으로 하고 sql update
+                                                break;
+                                            }
+                                            if (delay_date <= 0) {
+                                                delay_correct_count += 1;
+                                                break;
+                                            }
+
+                                        }
                                         if (delay_correct_count == 0) {
+                                            Log.d("delay_correct_count =0", "" + delay_correct_count);
                                             // count 0으로 하고 sql update
-                                            break;
-                                        }
-                                        if (delay_date <= 0) {
-                                            delay_correct_count += 1;
-                                            break;
+                                            db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "=date('now','+1 days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=0 " +
+                                                    "where " + DbContract.DbEntry2._ID + "=" + delay_problem_id);
+                                        } else {
+                                            delay_correct_count -= 1;
+                                            Log.d("delay_correct_count != 0", "" + delay_correct_count);
+                                            //sql update
+                                            db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "= date('now','+" + delay_correct_count + " days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=" + Integer.toString(delay_correct_count) +
+                                                    " where " + DbContract.DbEntry2._ID + " = " + delay_problem_id);
                                         }
 
-                                    }
-                                    if (delay_correct_count == 0) {
-                                        Log.d("delay_correct_count =0", "" + delay_correct_count);
-                                        // count 0으로 하고 sql update
-                                        db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "=date('now','+1 days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=0 " +
-                                                "where " + DbContract.DbEntry2._ID + "=" + delay_problem_id);
                                     } else {
                                         delay_correct_count -= 1;
-                                        Log.d("delay_correct_count != 0", "" + delay_correct_count);
-                                        //sql update
+                                        // sql update
+                                        Log.d("delay_correct_count !=0 one", "" + delay_correct_count);
                                         db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "= date('now','+" + delay_correct_count + " days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=" + Integer.toString(delay_correct_count) +
                                                 " where " + DbContract.DbEntry2._ID + " = " + delay_problem_id);
                                     }
-
-                                } else {
-                                    delay_correct_count -= 1;
-                                    // sql update
-                                    Log.d("delay_correct_count !=0 one", "" + delay_correct_count);
-                                    db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "= date('now','+" + delay_correct_count + " days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=" + Integer.toString(delay_correct_count) +
-                                            " where " + DbContract.DbEntry2._ID + " = " + delay_problem_id);
                                 }
+
 
 
                             }
