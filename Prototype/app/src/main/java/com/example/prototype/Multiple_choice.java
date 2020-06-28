@@ -35,14 +35,10 @@ public class Multiple_choice extends AppCompatActivity {
     TextView problem;
 
     int answer_id; // 정답 저장되는 변수
-    int result[] = new int[4]; // 보기 커서 위치 용
-
 
     ArrayList<Integer> problem_view_arr;
 
     int random; // 정답 랜덤으로 하기 위한 변수
-
-    int count2;
 
     int number_of_correct_answers = 0;  // 정답 횟수
     int wrong_count = 0; // 틀린횟수
@@ -54,7 +50,6 @@ public class Multiple_choice extends AppCompatActivity {
 
     int temp1, temp2, temp3, temp4;
 
-    int local_random;
 
 
     @Override
@@ -114,9 +109,12 @@ public class Multiple_choice extends AppCompatActivity {
      * 영어단어 작을 때도 유동적으로 하기 위해 그때 그때 TextView 생성
      **/
     public void create_text_view(int a) {
-
+        int random = (int)(Math.random()*5+2);
+        while (cu1.getString(random).equals("")){
+            random = (int)(Math.random()*5+2);
+        }
         TextView view = new TextView(this);
-        view.setText(cu1.getString(2));
+        view.setText(cu1.getString(random));
         view.setTextSize(FONT_SIZE);
         view.setTextColor(Color.BLACK);
         view.setBackgroundResource(R.drawable.border_radius);

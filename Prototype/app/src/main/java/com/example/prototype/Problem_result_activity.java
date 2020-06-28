@@ -17,6 +17,7 @@ public class Problem_result_activity extends AppCompatActivity {
 
     TextView result1,result2;
 
+    Button bts1;
 
     private DBHelper databaseHelper;
     private SQLiteDatabase db;
@@ -27,6 +28,7 @@ public class Problem_result_activity extends AppCompatActivity {
         setContentView(R.layout.activity_problem_result_activity);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
 
 
         databaseHelper = new DBHelper(this);
@@ -55,6 +57,8 @@ public class Problem_result_activity extends AppCompatActivity {
         result2.setTextSize(30);
         result2.setGravity(Gravity.CENTER);
         result2.setTextColor(Color.BLACK);
+
+
 
 
     }
