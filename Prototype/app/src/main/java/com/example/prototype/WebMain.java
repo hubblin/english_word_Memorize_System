@@ -75,6 +75,7 @@ public class WebMain extends AppCompatActivity {
         Intent intent = getIntent();
 
         mWordbookId = intent.getLongExtra("wordbookId", -1);
+
         final String sTitle = intent.getStringExtra("title");
         final String sSubtitle = intent.getStringExtra("subtitle");
 
