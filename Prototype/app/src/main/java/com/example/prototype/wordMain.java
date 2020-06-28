@@ -190,12 +190,10 @@ public class wordMain extends AppCompatActivity {
                                 int delay_date = Integer.parseInt(calculate_date.getString(0)); //지난 날짜
 
 
-                                if(delay_correct_count == 0){
+                                if (delay_correct_count == 0) {
                                     db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "=date('now','+1 days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=0 " +
                                             "where " + DbContract.DbEntry2._ID + "=" + delay_problem_id);
-                                }
-
-                                else{
+                                } else {
                                     if (delay_date > delay_correct_count) {
 
                                         while (delay_date > delay_correct_count) {
@@ -232,7 +230,6 @@ public class wordMain extends AppCompatActivity {
                                                 " where " + DbContract.DbEntry2._ID + " = " + delay_problem_id);
                                     }
                                 }
-
 
 
                             }
@@ -395,48 +392,43 @@ public class wordMain extends AppCompatActivity {
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
 
-            int countInt = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
-            Log.d("태그", ""+countInt);
-            switch (countInt){
-                case 0:
-                    break;
-                case 1:
-                    gauge1.setVisibility(View.INVISIBLE);
-                    gauge2.setVisibility(View.INVISIBLE);
-                    gauge3.setVisibility(View.INVISIBLE);
-                    gauge4.setVisibility(View.VISIBLE);
-                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
-                    break;
-                case 2:
-                    gauge1.setVisibility(View.INVISIBLE);
-                    gauge2.setVisibility(View.INVISIBLE);
-                    gauge4.setVisibility(View.VISIBLE);
-                    gauge3.setVisibility(View.VISIBLE);
-                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
-                    break;
-                case 3:
-                    gauge4.setVisibility(View.VISIBLE);
-                    gauge3.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
-                    gauge1.setVisibility(View.INVISIBLE);
-                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
-                    break;
-                case 4:
-                    gauge4.setVisibility(View.VISIBLE);
-                    gauge3.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
-                    gauge1.setVisibility(View.VISIBLE);
-                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
-                    break;
-                case 5:
-                    gauge1.setVisibility(View.INVISIBLE);
-                    gauge2.setVisibility(View.INVISIBLE);
-                    gauge3.setVisibility(View.INVISIBLE);
-                    gauge4.setVisibility(View.INVISIBLE);
-                    battery_back.setBackgroundResource(R.drawable.gauge_shape2);
+            String countInt = cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
+            Log.d("태그", "" + countInt);
 
-                    break;
+            if (countInt.e'0') {
+
+            } else if (countInt == 1) {
+                gauge1.setVisibility(View.INVISIBLE);
+                gauge2.setVisibility(View.INVISIBLE);
+                gauge3.setVisibility(View.INVISIBLE);
+                gauge4.setVisibility(View.VISIBLE);
+                battery_back.setBackgroundResource(R.drawable.gauge_shape);
+            } else if (countInt == 2) {
+                gauge1.setVisibility(View.INVISIBLE);
+                gauge2.setVisibility(View.INVISIBLE);
+                gauge4.setVisibility(View.VISIBLE);
+                gauge3.setVisibility(View.VISIBLE);
+                battery_back.setBackgroundResource(R.drawable.gauge_shape);
+            } else if (countInt == 3) {
+                gauge4.setVisibility(View.VISIBLE);
+                gauge3.setVisibility(View.VISIBLE);
+                gauge2.setVisibility(View.VISIBLE);
+                gauge1.setVisibility(View.INVISIBLE);
+                battery_back.setBackgroundResource(R.drawable.gauge_shape);
+            } else if (countInt == 4) {
+                gauge4.setVisibility(View.VISIBLE);
+                gauge3.setVisibility(View.VISIBLE);
+                gauge2.setVisibility(View.VISIBLE);
+                gauge1.setVisibility(View.VISIBLE);
+                battery_back.setBackgroundResource(R.drawable.gauge_shape);
+            } else if (countInt == 5) {
+                gauge1.setVisibility(View.INVISIBLE);
+                gauge2.setVisibility(View.INVISIBLE);
+                gauge3.setVisibility(View.INVISIBLE);
+                gauge4.setVisibility(View.INVISIBLE);
+                battery_back.setBackgroundResource(R.drawable.gauge_shape2);
             }
+
         }
 
     }
