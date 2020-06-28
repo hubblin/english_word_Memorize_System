@@ -10,8 +10,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Problem_result_activity extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class Problem_result_activity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
+        bts1 = (Button)findViewById(R.id.bts1);
 
         databaseHelper = new DBHelper(this);
         db = databaseHelper.getWritableDatabase();   // 쓰기 모드
@@ -58,8 +60,21 @@ public class Problem_result_activity extends AppCompatActivity {
         result2.setGravity(Gravity.CENTER);
         result2.setTextColor(Color.BLACK);
 
+        bts1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(),"수고하셨습니다 !",Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
     }
 }
