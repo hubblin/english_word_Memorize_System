@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -378,12 +379,48 @@ public class wordMain extends AppCompatActivity {
             TextView text3 = view.findViewById(R.id.TextMean3);
             TextView text4 = view.findViewById(R.id.TextMean4);
             TextView text5 = view.findViewById(R.id.TextMean5);
+            LinearLayout gauge1 = view.findViewById(R.id.gauge1);
+            LinearLayout gauge2 = view.findViewById(R.id.gauge2);
+            LinearLayout gauge3 = view.findViewById(R.id.gauge3);
+            LinearLayout gauge4 = view.findViewById(R.id.gauge4);
+
             spell.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_SPELL)));
             text1.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN1)));
             text2.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN2)));
             text3.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN3)));
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
+
+            int count = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
+            Log.d("태그", ""+count);
+            switch (count){
+                case 0:
+                    break;
+                case 1:
+                    gauge1.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    gauge1.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    gauge1.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    gauge1.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    gauge1.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
 
     }
