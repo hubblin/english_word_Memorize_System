@@ -3,12 +3,14 @@ package com.example.prototype;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -384,6 +386,8 @@ public class wordMain extends AppCompatActivity {
             LinearLayout gauge3 = view.findViewById(R.id.gauge3);
             LinearLayout gauge4 = view.findViewById(R.id.gauge4);
 
+            LinearLayout battery_back = view.findViewById(R.id.battery_back);
+
             spell.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_SPELL)));
             text1.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN1)));
             text2.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN2)));
@@ -391,34 +395,46 @@ public class wordMain extends AppCompatActivity {
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
 
-            int count = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
-            Log.d("태그", ""+count);
-            switch (count){
+            int countInt = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
+            Log.d("태그", ""+countInt);
+            switch (countInt){
                 case 0:
                     break;
                 case 1:
-                    gauge1.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 2:
-                    gauge1.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 3:
-                    gauge1.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
+                    gauge4.setVisibility(View.VISIBLE);
                     gauge3.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 4:
-                    gauge1.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
-                    gauge3.setVisibility(View.VISIBLE);
                     gauge4.setVisibility(View.VISIBLE);
+                    gauge3.setVisibility(View.VISIBLE);
+                    gauge2.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.VISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape);
                     break;
                 case 5:
-                    gauge1.setVisibility(View.VISIBLE);
-                    gauge2.setVisibility(View.VISIBLE);
-                    gauge3.setVisibility(View.VISIBLE);
-                    gauge4.setVisibility(View.VISIBLE);
+                    gauge1.setVisibility(View.INVISIBLE);
+                    gauge2.setVisibility(View.INVISIBLE);
+                    gauge3.setVisibility(View.INVISIBLE);
+                    gauge4.setVisibility(View.INVISIBLE);
+                    battery_back.setBackgroundResource(R.drawable.gauge_shape2);
+
                     break;
             }
         }
