@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     subtitle = cursor1.getString(colid2);
                 }
 
-                Toast.makeText(MainActivity.this,  title+"선택", Toast.LENGTH_SHORT).show();
+
 
                 intent.putExtra("id", id);
                 intent.putExtra("title", title);
