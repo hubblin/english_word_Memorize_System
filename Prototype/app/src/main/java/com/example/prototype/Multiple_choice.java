@@ -256,7 +256,9 @@ public class Multiple_choice extends AppCompatActivity {
                 getApplicationContext(),
                 "뒤로가기 버튼을 눌러 \n결과를 저장하지 않고 돌아갑니다.",
                 Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        Intent go_home = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(go_home);
     }
 
 

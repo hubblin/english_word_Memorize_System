@@ -75,6 +75,8 @@ public class Problem_result_activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Toast.makeText(getApplicationContext(),"수고하셨습니다 !",Toast.LENGTH_SHORT).show();
-        super.onBackPressed();
+        Intent go_home = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(go_home);
     }
 }
