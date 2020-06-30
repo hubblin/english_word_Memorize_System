@@ -115,6 +115,8 @@
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:id="@id/battery"
@@ -131,6 +133,19 @@
 
             ></LinearLayout>
 
+
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dayday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/battery_back"
+        android:layout_alignEnd="@+id/battery"
+        android:text="text"
+        android:gravity="center"
+        />
+
 
 </RelativeLayout>

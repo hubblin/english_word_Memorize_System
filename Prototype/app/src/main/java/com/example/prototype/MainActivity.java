@@ -135,7 +135,9 @@ public class MainActivity extends AppCompatActivity {
                         int deleteWord = db.delete(DbContract.DbEntry2.TABLE_NAME, DbContract.DbEntry2.WORDBOOK_ID + " = " + wordbook_id, null);
                         //============================================================================================//
                         int deletedCount = db.delete(DbContract.DbEntry.TABLE_NAME, DbContract.DbEntry._ID + " = " + deletedId, null);
-                        if(deletedCount == 0 || deleteWord == 0){
+
+                        //2020.6.29 오류나는 부분 수정
+                        if(deletedCount == 0 && deleteWord == 0){
                             Toast.makeText(MainActivity.this, "삭제에 문제가 발생하였습니다.", Toast.LENGTH_SHORT).show();
                         }else{
                             mAdapter.swapCursor(getListCursor());

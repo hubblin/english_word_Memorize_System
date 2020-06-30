@@ -55,6 +55,7 @@ public class wordMain extends AppCompatActivity {
 
     Cursor check_cur1, check_cur2;
 
+
     ArrayList<String> delay_date = new ArrayList<String>();
 
 
@@ -385,12 +386,16 @@ public class wordMain extends AppCompatActivity {
 
             LinearLayout battery_back = view.findViewById(R.id.battery_back);
 
+            TextView dayday = view.findViewById(R.id.dayday);
+
             spell.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_SPELL)));
             text1.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN1)));
             text2.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN2)));
             text3.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN3)));
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
+
+            dayday.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.DATE)));
 
 
             int countInt = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
