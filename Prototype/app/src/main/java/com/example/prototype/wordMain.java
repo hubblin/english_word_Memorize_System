@@ -55,6 +55,7 @@ public class wordMain extends AppCompatActivity {
 
     Cursor check_cur1, check_cur2;
 
+
     ArrayList<String> delay_date = new ArrayList<String>();
 
 
@@ -190,12 +191,10 @@ public class wordMain extends AppCompatActivity {
                                 int delay_date = Integer.parseInt(calculate_date.getString(0)); //지난 날짜
 
 
-                                if(delay_correct_count == 0){
+                                if (delay_correct_count == 0) {
                                     db.execSQL("update " + DbContract.DbEntry2.TABLE_NAME + " set " + DbContract.DbEntry2.DATE + "=date('now','+1 days'), " + DbContract.DbEntry2.CORRECT_ANSWER + "=0 " +
                                             "where " + DbContract.DbEntry2._ID + "=" + delay_problem_id);
-                                }
-
-                                else{
+                                } else {
                                     if (delay_date > delay_correct_count) {
 
                                         while (delay_date > delay_correct_count) {
@@ -232,7 +231,6 @@ public class wordMain extends AppCompatActivity {
                                                 " where " + DbContract.DbEntry2._ID + " = " + delay_problem_id);
                                     }
                                 }
-
 
 
                             }
@@ -388,12 +386,17 @@ public class wordMain extends AppCompatActivity {
 
             LinearLayout battery_back = view.findViewById(R.id.battery_back);
 
+            TextView dayday = view.findViewById(R.id.dayday);
+
             spell.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_SPELL)));
             text1.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN1)));
             text2.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN2)));
             text3.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN3)));
             text4.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN4)));
             text5.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.WORD_MEAN5)));
+
+            dayday.setText(cursor.getString(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.DATE)));
+
 
             int countInt = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.DbEntry2.CORRECT_ANSWER));
             Log.d("태그", ""+countInt);
@@ -446,7 +449,9 @@ public class wordMain extends AppCompatActivity {
                     battery_back.setBackgroundResource(R.drawable.gauge_shape2);
 
                     break;
+
             }
+
         }
 
     }
