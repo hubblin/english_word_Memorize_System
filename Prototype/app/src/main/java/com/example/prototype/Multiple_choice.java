@@ -195,7 +195,10 @@ public class Multiple_choice extends AppCompatActivity {
                         save_problem_count(random, true);
                         reset_activity();
                     } else {
-                        Toast.makeText(getApplicationContext(), "틀림", Toast.LENGTH_SHORT).show();
+                        Cursor answer_cu=db.rawQuery("select "+ DbContract.DbEntry2 .WORD_SPELL+" from "+ DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id,null);
+                        answer_cu.moveToFirst();
+
+                        Toast.makeText(getApplicationContext(), "틀림\n정답:"+answer_cu.getString(0), Toast.LENGTH_SHORT).show();
                         wrong_count += 1;
                         save_problem_count(random, false);
                         reset_activity();
@@ -209,7 +212,10 @@ public class Multiple_choice extends AppCompatActivity {
                         save_problem_count(random, true);
                         reset_activity();
                     } else {
-                        Toast.makeText(getApplicationContext(), "틀림", Toast.LENGTH_SHORT).show();
+                        Cursor answer_cu=db.rawQuery("select "+ DbContract.DbEntry2 .WORD_SPELL+" from "+ DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id,null);
+                        answer_cu.moveToFirst();
+
+                        Toast.makeText(getApplicationContext(), "틀림\n정답:"+answer_cu.getString(0), Toast.LENGTH_SHORT).show();
                         wrong_count += 1;
                         save_problem_count(random, false);
                         reset_activity();
@@ -223,7 +229,10 @@ public class Multiple_choice extends AppCompatActivity {
                         save_problem_count(random, true);
                         reset_activity();
                     } else {
-                        Toast.makeText(getApplicationContext(), "틀림", Toast.LENGTH_SHORT).show();
+                        Cursor answer_cu=db.rawQuery("select "+ DbContract.DbEntry2 .WORD_SPELL+" from "+ DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id,null);
+                        answer_cu.moveToFirst();
+
+                        Toast.makeText(getApplicationContext(), "틀림\n정답:"+answer_cu.getString(0), Toast.LENGTH_SHORT).show();
                         wrong_count += 1;
                         save_problem_count(random, false);
                         reset_activity();
@@ -237,7 +246,10 @@ public class Multiple_choice extends AppCompatActivity {
                         save_problem_count(random, true);
                         reset_activity();
                     } else {
-                        Toast.makeText(getApplicationContext(), "틀림", Toast.LENGTH_SHORT).show();
+                        Cursor answer_cu=db.rawQuery("select "+ DbContract.DbEntry2 .WORD_SPELL+" from "+ DbContract.DbEntry2.TABLE_NAME+" where "+ DbContract.DbEntry2._ID+"="+answer_id,null);
+                        answer_cu.moveToFirst();
+
+                        Toast.makeText(getApplicationContext(), "틀림\n정답:"+answer_cu.getString(0), Toast.LENGTH_SHORT).show();
                         wrong_count += 1;
                         save_problem_count(random, false);
                         reset_activity();
