@@ -57,6 +57,7 @@ public class wordMain extends AppCompatActivity {
 
     ArrayList<String> delay_date = new ArrayList<String>();
 
+    int a; //adwawdawd
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
